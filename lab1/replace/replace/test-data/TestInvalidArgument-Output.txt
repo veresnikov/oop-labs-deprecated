@@ -1,0 +1,2 @@
+Invalid argument.
+Usage: replace.exe <input file> <output file> <search string> <replace string>
