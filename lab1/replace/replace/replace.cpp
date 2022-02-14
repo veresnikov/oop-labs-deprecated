@@ -4,30 +4,30 @@
 
 using namespace std;
 
-const int ExpectedArgument = 5;
-const int ErrorStatusCode = 1;
+const int expectedArgument = 5;
+const int errorStatusCode = 1;
 
 struct CommandLineArgument
 {
-	string InputFile;
-	string OutputFile;
-	string Search;
-	string Replace;
+	string inputFile;
+	string outputFile;
+	string search;
+	string replace;
 };
 
 CommandLineArgument ParseCommandLineArgument(int argc, char* argv[])
 {
-	if (argc != ExpectedArgument)
+	if (argc != expectedArgument)
 	{
 		cerr << "Invalid argument." << endl
 			 << "Usage: replace.exe <input file> <output file> <search string> <replace string>" << endl;
-		exit(ErrorStatusCode);
+		exit(errorStatusCode);
 	}
 	CommandLineArgument argument;
-	argument.InputFile = argv[1];
-	argument.OutputFile = argv[2];
-	argument.Search = argv[3];
-	argument.Replace = argv[4];
+	argument.inputFile = argv[1];
+	argument.outputFile = argv[2];
+	argument.search = argv[3];
+	argument.replace = argv[4];
 
 	return argument;
 }
@@ -80,19 +80,19 @@ int main(int argc, char* argv[])
 {
 	CommandLineArgument argument = ParseCommandLineArgument(argc, argv);
 
-	ifstream inputFile(argument.InputFile);
+	ifstream inputFile(argument.inputFile);
 	if (!inputFile.is_open())
 	{
 		cerr << "Input file does not exist." << endl;
-		exit(ErrorStatusCode);
+		exit(errorStatusCode);
 	}
 
-	ofstream outputFile(argument.OutputFile);
+	ofstream outputFile(argument.outputFile);
 	if (!outputFile.is_open())
 	{
 		cerr << "Error opening output file." << endl;
-		exit(ErrorStatusCode);
+		exit(errorStatusCode);
 	}
 
-	CopyFileWithReplace(inputFile, outputFile, argument.Search, argument.Replace);
+	CopyFileWithReplace(inputFile, outputFile, argument.search, argument.replace);
 }
