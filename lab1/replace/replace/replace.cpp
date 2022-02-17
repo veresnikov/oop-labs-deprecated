@@ -62,16 +62,6 @@ string ReplaceString(const string& subject, const string& search, const string& 
 	return result;
 }
 
-string ReplaceStringWithRegex(const string& subject, const string& search, const string& replace)
-{
-	if (search.empty() || regex_match(subject, regex(search)))
-	{
-		return subject;
-	}
-	string result = subject;
-	return regex_replace(result, regex(search), replace);
-};
-
 void CopyFileWithReplace(istream& inputFile, ostream& outputFile, string search, string replace)
 {
 	string line;
