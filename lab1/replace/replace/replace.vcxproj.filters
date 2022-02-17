@@ -36,6 +36,8 @@
     <Text Include="test-data\TestPhraseToPhraseReplacement-Output.txt" />
     <Text Include="test-data\TestStress-Input.txt" />
     <Text Include="test-data\TestStress-Output.txt" />
+    <Text Include="output.txt" />
+    <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.bat">

@@ -1,11 +1,13 @@
 ﻿#include <fstream>
 #include <iostream>
+#include <optional>
+#include <regex>
 #include <string>
 
 using namespace std;
 
-const int expectedArgument = 5;
-const int errorStatusCode = 1;
+const int EXPECTED_ARGUMENT = 5;
+const int ERROR_STATUS_CODE = 1;
 
 struct CommandLineArgument
 {
@@ -15,13 +17,11 @@ struct CommandLineArgument
 	string replace;
 };
 
-CommandLineArgument ParseCommandLineArgument(int argc, char* argv[])
+optional<CommandLineArgument> ParseCommandLineArgument(int argc, char* argv[])
 {
-	if (argc != expectedArgument)
+	if (argc != EXPECTED_ARGUMENT)
 	{
-		cerr << "Invalid argument." << endl
-			 << "Usage: replace.exe <input file> <output file> <search string> <replace string>" << endl;
-		exit(errorStatusCode);
+		return nullopt;
 	}
 	CommandLineArgument argument;
 	argument.inputFile = argv[1];
@@ -38,25 +38,39 @@ string ReplaceString(const string& subject, const string& search, const string& 
 	{
 		return subject;
 	}
-	string result = subject;
+
+	string result;
 	size_t position = 0;
-	while (position < result.length())
+	size_t replacedPosition = subject.find(search, position);
+	if (replacedPosition == string::npos)
 	{
-		size_t replacedPosition = result.find(search, position);
-		if (replacedPosition == string::npos)
-		{
-			return result;
-		}
-		position = replacedPosition;
-
-		result.erase(replacedPosition, search.length());
-		result.insert(replacedPosition, replace);
-
-		position += replace.length();
+		return subject;
 	}
 
+	while (position < subject.length())
+	{
+		size_t replacedPosition = subject.find(search, position);
+		if (replacedPosition == string::npos)
+		{
+			result.append(subject, position, subject.length() - position);
+			break;
+		}
+		result.append(subject, position, replacedPosition - position);
+		result.append(replace);
+		position = replacedPosition + search.length();
+	}
 	return result;
 }
+
+string ReplaceStringWithRegex(const string& subject, const string& search, const string& replace)
+{
+	if (search.empty() || regex_match(subject, regex(search)))
+	{
+		return subject;
+	}
+	string result = subject;
+	return regex_replace(result, regex(search), replace);
+};
 
 void CopyFileWithReplace(istream& inputFile, ostream& outputFile, string search, string replace)
 {
@@ -78,21 +92,27 @@ void CopyFileWithReplace(istream& inputFile, ostream& outputFile, string search,
 
 int main(int argc, char* argv[])
 {
-	CommandLineArgument argument = ParseCommandLineArgument(argc, argv);
+	auto argument = ParseCommandLineArgument(argc, argv);
+	if (!argument)
+	{
+		cerr << "Invalid argument." << endl
+			 << "Usage: replace.exe <input file> <output file> <search string> <replace string>" << endl;
+		return ERROR_STATUS_CODE;
+	}
 
-	ifstream inputFile(argument.inputFile);
+	ifstream inputFile(argument->inputFile);
 	if (!inputFile.is_open())
 	{
 		cerr << "Input file does not exist." << endl;
-		exit(errorStatusCode);
+		return ERROR_STATUS_CODE;
 	}
 
-	ofstream outputFile(argument.outputFile);
+	ofstream outputFile(argument->outputFile);
 	if (!outputFile.is_open())
 	{
 		cerr << "Error opening output file." << endl;
-		exit(errorStatusCode);
+		return ERROR_STATUS_CODE;
 	}
 
-	CopyFileWithReplace(inputFile, outputFile, argument.search, argument.replace);
+	CopyFileWithReplace(inputFile, outputFile, argument->search, argument->replace);
 }

@@ -10,7 +10,6 @@ set TEMPRESULT="%TEMP%\result.txt"
 set TEMPOUTPUT="%TEMP%\output.txt"
 
 echo %CD%
-
 echo Test invalid argument
 %PROGRAM% > %TEMPOUTPUT% 2>&1
 fc %TEMPOUTPUT% %CD%\test-data\TestInvalidArgument-Output.txt || goto :err
@@ -45,9 +44,9 @@ fc %TEMPRESULT% %CD%\test-data\TestPhraseToPhraseReplacement-Output.txt || goto 
 
 echo Test stress
 echo Time start: %time%
-%PROGRAM% %CD%\test-data\TestStress-Input.txt %TEMPRESULT% a A > %TEMPOUTPUT% 2>&1
+%PROGRAM% %CD%\test-data\TestStress-Input.txt %TEMPRESULT% a BB > %TEMPOUTPUT% 2>&1
 echo Time stop: %time%
-fc %TEMPRESULT% %CD%\test-data\TestStress-Output.txt || goto :err
+fc %TEMPOUTPUT% %CD%\test-data\TestStress-Output.txt || goto :err
 
 echo All test passed
 exit /B 0
