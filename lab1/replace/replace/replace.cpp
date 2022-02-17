@@ -49,7 +49,7 @@ string ReplaceString(const string& subject, const string& search, const string& 
 
 	while (position < subject.length())
 	{
-		size_t replacedPosition = subject.find(search, position);
+		replacedPosition = subject.find(search, position);
 		if (replacedPosition == string::npos)
 		{
 			result.append(subject, position, subject.length() - position);
