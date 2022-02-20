@@ -19,4 +19,16 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="test.bat">
+      <Filter>Исходные файлы</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test-data\TestInvalidArgument-Output.txt" />
+    <Text Include="test-data\TestErrorConverting-Output.txt" />
+    <Text Include="test-data\TestLowerRange-Output.txt" />
+    <Text Include="test-data\TestUpperRange-Output.txt" />
+    <Text Include="test-data\TestResult-Output.txt" />
+  </ItemGroup>
 </Project>
