@@ -19,4 +19,8 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="matrix-1.txt" />
+    <Text Include="matrix-2.txt" />
+  </ItemGroup>
 </Project>
