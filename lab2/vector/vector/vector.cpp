@@ -4,6 +4,7 @@
 #include <optional>
 #include <stdexcept>
 #include <vector>
+#include <iterator>
 
 std::optional<std::vector<double>> ParseVector(std::istream& input)
 {
@@ -23,7 +24,6 @@ std::optional<std::vector<double>> ParseVector(std::istream& input)
 
 void PrintVector(std::ostream& output, const std::vector<double> &v)
 {
-	// найти более оптимальный спопсоб печати см. 151 слайд
 	for (int i = 0; i < v.size(); ++i)
 	{
 		output << std::fixed << std::setprecision(3) << v[i];
