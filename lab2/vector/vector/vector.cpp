@@ -4,7 +4,6 @@
 #include <optional>
 #include <stdexcept>
 #include <vector>
-#include <iterator>
 
 std::optional<std::vector<double>> ParseVector(std::istream& input)
 {
@@ -22,7 +21,7 @@ std::optional<std::vector<double>> ParseVector(std::istream& input)
 	return result;
 }
 
-void PrintVector(std::ostream& output, const std::vector<double> &v)
+void PrintVector(std::ostream& output, const std::vector<double>& v)
 {
 	for (int i = 0; i < v.size(); ++i)
 	{
@@ -35,11 +34,13 @@ void PrintVector(std::ostream& output, const std::vector<double> &v)
 	output << std::endl;
 }
 
-void MultiplyEverythingByTheMinimumElement(std::vector<double> &vector) {
+void MultiplyEverythingByTheMinimumElement(std::vector<double>& vector)
+{
 	double min = *std::min_element(vector.begin(), vector.end());
-	std::transform(vector.begin(), vector.end(), vector.begin(), [min](double i) -> double { return i * min; });
+	std::transform(vector.begin(), vector.end(), vector.begin(), [min](double item) -> double { return item * min; });
 }
 
-void SortVectorInAscendingOrder(std::vector<double> &vector) {
+void SortVectorInAscendingOrder(std::vector<double>& vector)
+{
 	std::sort(vector.begin(), vector.end());
 }

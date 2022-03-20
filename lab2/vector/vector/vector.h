@@ -13,7 +13,7 @@ std::optional<std::vector<double>> ParseVector(std::istream& input);
 
 void PrintVector(std::ostream& output, const std::vector<double> &v);
 
-void MultiplyEverythingByTheMinimumElement(std::vector<double> &vector);
+void MultiplyEverythingByTheMinimumElement(std::vector<double> & item);
 
 void SortVectorInAscendingOrder(std::vector<double> &vector);
 
